@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Турниры</title>
+    <style>
+        body {
+            font-family: 'Gabriela', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #010d3d; /* Тёмно-синий фон */
+            color: #fff;
+        }
+        .banner {
+            width: 100%;
+            height: 200px;
+            background-image: url('files/tournaments.webp'); /* Ваше изображение */
+            background-size: cover;
+            background-position: center;
+        }
+        .search-bar {
+            text-align: center;
+            padding: 20px;
+            background-color: #002366; /* Тёмно-синий фон для поиска */
+        }
+        .search-bar input {
+            width: 40%;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Gabriela', serif;
+            margin-right: 10px;
+        }
+        .search-bar select {
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Gabriela', serif;
+            background-color: #0040cb;
+            color: #fff;
+            margin-right: 10px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Gabriela', serif;
+            background-color: #0040cb;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+        .search-bar button:hover {
+            background-color: #470486;
+        }
+        .tournaments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+        }
+        .tournament-card {
+            display: flex;
+            background-color: #002366; /* Тёмно-синий фон для карточки */
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .tournament-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+        .tournament-info {
+            flex-grow: 1;
+        }
+        .tournament-info h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .tournament-info p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+        .tournament-timer {
+            text-align: right;
+        }
+        .tournament-timer p {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #ffcc00; /* Жёлтый цвет для таймера */
+        }
+        .details-button {
+            background-color: #ff8c42; /* Оранжевая кнопка */
+            color: #fff;
+            border: none;
+            margin-top: 30px;
+            margin-right: 50px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        .details-button:hover {
+            background-color: #e67300; /* Темнее оранжевый при наведении */
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #002366;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .modal-content h2 {
+            margin-top: 0;
+        }
+        .modal-content button {
+            margin-top: 20px;
+        }
+        .close-button {
+            background-color: #ff8c42;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Баннер под навбаром -->
+    <div class="banner"></div>
+
+    <!-- Поисковая строка и фильтр -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Поиск турнира..." oninput="filterTournaments()">
+        <select id="gameFilter" onchange="filterTournaments()">
+            <option value="">Все игры</option>
+            <option value="CS:GO">CS:GO</option>
+            <option value="Dota 2">Dota 2</option>
+            <option value="Valorant">Valorant</option>
+        </select>
+        <button onclick="clearFilters()">Очистить фильтры</button>
+    </div>
+
+    <!-- Список турниров -->
+    <div class="tournaments-list">
+        <!-- Пример карточки турнира -->
+        <div class="tournament-card" data-game="CS:GO">
+            <img src="files/csgo.jpg" alt="Игра 1">
+            <div class="tournament-info">
+                <h2>Турнир по CS:GO</h2>
+                <p>Дата: 7 февраля 2025</p>
+                <p>Участники: 16 команд</p>
+                <p>Требуемое звание: <img src="files/rank1.png" alt="Звание" style="height: 20px;"></p>
+            </div>
+            <div class="tournament-timer">
+                <p>До конца регистрации: <span id="timer1">02:15:30</span></p>
+                <button class="details-button" onclick="openModal('modal1')">Подробнее</button>
+            </div>
+        </div>
+
+        <!-- Вторая карточка турнира -->
+        <div class="tournament-card" data-game="Dota 2">
+            <img src="files/dota2.jpg" alt="Игра 2">
+            <div class="tournament-info">
+                <h2>Турнир по Dota 2</h2>
+                <p>Дата: 7 февраля 2025</p>
+                <p>Участники: 8 команд</p>
+                <p>Требуемое звание: <img src="files/rank2.png" alt="Звание" style="height: 20px;"></p>
+            </div>
+            <div class="tournament-timer">
+                <p>До конца регистрации: <span id="timer2">01:45:10</span></p>
+                <button class="details-button" onclick="openModal('modal2')">Подробнее</button>
+            </div>
+        </div>
+
+        <!-- Третья карточка турнира -->
+        <div class="tournament-card" data-game="Valorant">
+            <img src="files/valorant.png" alt="Игра 2">
+            <div class="tournament-info">
+                <h2>Турнир по Valorant</h2>
+                <p>Дата: 7 февраля 2025</p>
+                <p>Участники: 8 команд</p>
+                <p>Требуемое звание: <img src="files/rank3.png" alt="Звание" style="height: 20px;"></p>
+            </div>
+            <div class="tournament-timer">
+                <p>До конца регистрации: <span id="timer3">03:25:43</span></p>
+                <button class="details-button" onclick="openModal('modal2')">Подробнее</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальные окна -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h2>Турнир по CS:GO</h2>
+            <p>Дата: 7 февраля 2025</p>
+            <p>Участники: 16 команд</p>
+            <p>Требуемое звание: <img src="files/rank1.png" alt="Звание" style="height: 20px;"></p>
+            <p>Описание: Турнир для профессиональных команд. Призовой фонд: $10,000.</p>
+            <button class="close-button" onclick="closeModal('modal1')">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <h2>Турнир по Dota 2</h2>
+            <p>Дата: 7 февраля 2025</p>
+            <p>Участники: 8 команд</p>
+            <p>Требуемое звание: <img src="files/rank2.png" alt="Звание" style="height: 20px;"></p>
+            <p>Описание: Турнир для любителей. Призовой фонд: $5,000.</p>
+            <button class="close-button" onclick="closeModal('modal2')">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <h2>Турнир по Valorant</h2>
+            <p>Дата: 7 февраля 2025</p>
+            <p>Участники: 8 команд</p>
+            <p>Требуемое звание: <img src="files/rank3.png" alt="Звание" style="height: 20px;"></p>
+            <p>Описание: Турнир для любителей. Призовой фонд: $5,000.</p>
+            <button class="close-button" onclick="closeModal('modal3')">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        // Функция для открытия модального окна
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        // Функция для закрытия модального окна
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Функция для фильтрации турниров
+        function filterTournaments() {
+            const searchText = document.getElementById('searchInput').value.trim().toLowerCase();
+            const selectedGame = document.getElementById('gameFilter').value.toLowerCase();
+            const cards = document.querySelectorAll('.tournament-card');
+
+            cards.forEach(card => {
+                const game = card.getAttribute('data-game').toLowerCase();
+                const title = card.querySelector('h2').textContent.toLowerCase();
+
+                // Проверяем, соответствует ли карточка выбранной игре и поисковому запросу
+                const matchesGame = selectedGame === '' || game === selectedGame;
+                const matchesSearch = title.includes(searchText) || extractGameFromText(searchText) === game;
+
+                if (matchesGame && matchesSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Функция для извлечения названия игры из текста
+        function extractGameFromText(text) {
+            const games = ['cs:go', 'dota 2', 'valorant'];
+            for (const game of games) {
+                if (text.includes(game)) {
+                    return game;
+                }
+            }
+            return '';
+        }
+
+        // Функция для очистки фильтров
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('gameFilter').value = '';
+            filterTournaments();
+        }
+
+        // Таймеры для турниров
+        function startTimer(duration, display) {
+            let timer = duration, hours, minutes, seconds;
+            setInterval(function () {
+                hours = parseInt(timer / 3600, 10);
+                minutes = parseInt((timer % 3600) / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = hours + ":" + minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = duration;
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            const timer1 = 2 * 3600 + 15 * 60 + 30; // 2 часа 15 минут 30 секунд
+            const timer2 = 1 * 3600 + 45 * 60 + 10; // 1 час 45 минут 10 секунд
+            const timer3 = 3 * 3600 + 25 * 60 + 43; // 3 часа 25 минут 43 секунды
+            startTimer(timer1, document.getElementById('timer1'));
+            startTimer(timer2, document.getElementById('timer2'));
+            startTimer(timer3, document.getElementById('timer3'));
+        };
+    </script>
+</body>
+</html>

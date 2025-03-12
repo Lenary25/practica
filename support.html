@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Техническая поддержка</title>
+    <style>
+        body {
+            background-image: url(files/support.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Gabriela', serif;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            height: 90vh;
+        }
+
+        h1 {
+            color: #160563;
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        select, textarea {
+            width: 96%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Gabriela', serif;
+            font-size: 1rem;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 250px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #0040cb;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Gabriela', serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #470486;
+        }
+    </style>
+</head>
+<body>
+    <form id="supportForm">
+        <!-- Выпадающий список для выбора категории проблемы -->
+        <h1>Техническая поддержка</h1>
+        <label for="issueCategory">Категория проблемы:</label>
+        <select id="issueCategory" name="issueCategory" required>
+            <option value="" disabled selected>Выберите категорию</option>
+            <option value="technical">Техническая проблема</option>
+            <option value="account">Проблема с аккаунтом</option>
+            <option value="payment">Проблема с оплатой</option>
+            <option value="other">Другое</option>
+        </select>
+
+        <!-- Текстовое поле для описания проблемы -->
+        <label for="issueDescription">Опишите вашу проблему:</label>
+        <textarea id="issueDescription" name="issueDescription" placeholder="Опишите проблему подробно..." required></textarea>
+
+        <!-- Кнопка отправки -->
+        <button type="submit">Отправить</button>
+    </form>
+
+    <script>
+        // Обработчик отправки формы
+        document.getElementById('supportForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Отменяем стандартное поведение формы
+
+            // Получаем данные из формы
+            const category = document.getElementById('issueCategory').value;
+            const description = document.getElementById('issueDescription').value;
+
+            // Выводим данные в консоль (в реальном проекте здесь будет отправка на сервер)
+            console.log('Категория проблемы:', category);
+            console.log('Описание проблемы:', description);
+
+            // Оповещение пользователя
+            alert('Ваше обращение отправлено! Мы свяжемся с вами в ближайшее время.');
+
+            // Очищаем форму
+            document.getElementById('supportForm').reset();
+        });
+    </script>
+</body>
+</html>

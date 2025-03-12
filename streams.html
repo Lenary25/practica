@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Видео слайдер</title>
+    <style>
+        body {
+            background-image: url(files/streams.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #333;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Прозрачный прямоугольник */
+        .content-box {
+            background-color: rgba(255, 255, 255, 0.7); /* Белый с прозрачностью 70% */
+            padding: 3px;
+            border-radius: 10px;
+            width: 90%; /* Ширина прямоугольника */
+            max-width: 1200px; /* Максимальная ширина */
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень для красоты */
+        }
+
+        /* Стили для слайдера */
+        .slider {
+            position: relative;
+            width: 100%;
+            height: 70vh; /* Высота слайдера */
+            max-height: 600px; /* Максимальная высота */
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Сохраняет пропорции видео */
+            border-radius: 10px;
+        }
+
+        /* Кнопки навигации */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: auto;
+            padding: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            transition: 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            user-select: none;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="content-box">
+        <div class="slider">
+            <div class="slides">
+                <!-- Слайд с видео 1 -->
+                <div class="slide">
+                    <video controls>
+                        <source src="files/транса1.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+
+                <!-- Слайд с видео 2 -->
+                <div class="slide">
+                    <video controls>
+                        <source src="files/транса2.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+
+                <!-- Слайд с видео 3
+                <div class="slide">
+                    <video controls>
+                        <source src="files/video3.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div> -->
+
+                <!-- Добавьте больше слайдов по необходимости -->
+            </div>
+            <a class="prev" onclick="moveSlide(-1)">&#10094;</a>
+            <a class="next" onclick="moveSlide(1)">&#10095;</a>
+        </div>
+    </div>
+
+    <script>
+        let slideIndex = 0;
+
+        function moveSlide(n) {
+            const slides = document.querySelectorAll(".slide");
+            slideIndex += n;
+
+            // Проверка границ
+            if (slideIndex >= slides.length) {
+                slideIndex = 0;
+            } else if (slideIndex < 0) {
+                slideIndex = slides.length - 1;
+            }
+
+            // Перемещение слайдов
+            document.querySelector(".slides").style.transform = `translateX(${-slideIndex * 100}%)`;
+
+            // Останавливаем воспроизведение всех видео
+            const videos = document.querySelectorAll("video");
+            videos.forEach(video => video.pause());
+        }
+
+        // Автоматическая прокрутка слайдов (опционально)
+        // setInterval(() => moveSlide(1), 10000);
+    </script>
+</body>
+</html>

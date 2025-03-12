@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <style>
+        body {
+            background-image: url(files/login.avif);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: rgb(255, 255, 255);
+            font-family: 'Gabriela-Regular', serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(1, 13, 61, 0.8);
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        input {
+            width: 94%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #2fb5d6;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        input::placeholder {
+            color: #ddd;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #0040cb, #2fb5d6);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #2fb5d6, #0040cb);
+            box-shadow: 0 4px 15px rgba(47, 181, 214, 0.5);
+        }
+
+        .register-link {
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .register-link a {
+            color: #2fb5d6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Вход</h1>
+        <form>
+            <input type="text" placeholder="Имя пользователя" required>
+            <input type="password" placeholder="Пароль" required>
+            <button type="submit">Войти</button>
+        </form>
+        <div class="register-link">
+            Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+        </div>
+    </div>
+</body>
+</html>

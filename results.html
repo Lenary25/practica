@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты матчей</title>
+    <style>
+        /* Основные стили */
+        body {
+            background-image: url(files/news.webp);
+            margin: 0;
+            font-family: 'Gabriela-Regular', serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+            padding: 20px;
+        }
+
+        /* Прозрачный прямоугольник */
+        .content-box {
+            background-color: rgba(8, 23, 90, 0.9); /* Полупрозрачный фон */
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Тень */
+        }
+
+        /* Заголовок страницы */
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ffffff; /* Акцентный цвет */
+        }
+
+        /* Выпадающий список */
+        .game-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-selector select {
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #019196;
+            cursor: pointer;
+        }
+
+        /* Таблица */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0); /* Полупрозрачный фон таблицы */
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 2px solid rgb(71, 88, 243); /* Границы ячеек */
+        }
+
+        th {
+            background-color: rgba(47, 181, 214, 0.2); /* Фон заголовков */
+            font-size: 1.2rem;
+            color: #ffffff; /* Цвет текста заголовков */
+        }
+
+        td {
+            font-size: 1rem;
+            color: #ddd; /* Цвет текста ячеек */
+        }
+
+        /* Стиль для ячеек с результатами */
+        td.win {
+            background-color: rgba(0, 128, 0, 0.3); /* Зелёный для побед */
+            font-weight: bold;
+        }
+
+        td.loss {
+            background-color: rgba(255, 0, 0, 0.3); /* Красный для поражений */
+            font-weight: bold;
+        }
+
+        /* Анимация при наведении на ячейку */
+        td:hover {
+            background-color: rgba(95, 203, 230, 0.493); /* Подсветка при наведении */
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Прозрачный прямоугольник -->
+    <div class="content-box">
+        <h1>Результаты проведённых матчей</h1>
+
+        <!-- Выпадающий список для выбора игры -->
+        <div class="game-selector">
+            <select id="gameSelector" onchange="changeTable()">
+                <option value="csgo">CS:GO</option>
+                <option value="dota2">Dota 2</option>
+                <option value="valorant">Valorant</option>
+            </select>
+        </div>
+
+        <!-- Таблица для CS:GO -->
+        <div id="csgo-table" class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Команды</th>
+                        <th>Команда A</th>
+                        <th>Команда B</th>
+                        <th>Команда C</th>
+                        <th>Команда D</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Команда A</th>
+                        <td>-</td>
+                        <td class="win">2:1</td>
+                        <td class="loss">0:2</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <th>Команда B</th>
+                        <td class="loss">1:2</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td class="win">2:0</td>
+                    </tr>
+                    <tr>
+                        <th>Команда C</th>
+                        <td class="win">2:0</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td class="loss">1:2</td>
+                    </tr>
+                    <tr>
+                        <th>Команда D</th>
+                        <td>-</td>
+                        <td class="loss">0:2</td>
+                        <td class="win">2:1</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Таблица для Dota 2 -->
+        <div id="dota2-table" class="table-container" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Команды</th>
+                        <th>Команда X</th>
+                        <th>Команда Y</th>
+                        <th>Команда Z</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Команда X</th>
+                        <td>-</td>
+                        <td class="win">2:1</td>
+                        <td class="loss">1:2</td>
+                    </tr>
+                    <tr>
+                        <th>Команда Y</th>
+                        <td class="loss">1:2</td>
+                        <td>-</td>
+                        <td class="win">2:0</td>
+                    </tr>
+                    <tr>
+                        <th>Команда Z</th>
+                        <td class="win">2:1</td>
+                        <td class="loss">0:2</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Таблица для Valorant -->
+        <div id="valorant-table" class="table-container" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Команды</th>
+                        <th>Команда Alpha</th>
+                        <th>Команда Beta</th>
+                        <th>Команда Gamma</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Команда Alpha</th>
+                        <td>-</td>
+                        <td class="win">13:9</td>
+                        <td class="loss">10:13</td>
+                    </tr>
+                    <tr>
+                        <th>Команда Beta</th>
+                        <td class="loss">9:13</td>
+                        <td>-</td>
+                        <td class="win">13:11</td>
+                    </tr>
+                    <tr>
+                        <th>Команда Gamma</th>
+                        <td class="win">13:10</td>
+                        <td class="loss">11:13</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Функция для смены таблицы
+        function changeTable() {
+            const gameSelector = document.getElementById('gameSelector');
+            const selectedGame = gameSelector.value;
+
+            // Скрываем все таблицы
+            document.querySelectorAll('.table-container').forEach(table => {
+                table.style.display = 'none';
+            });
+
+            // Показываем выбранную таблицу
+            document.getElementById(`${selectedGame}-table`).style.display = 'block';
+        }
+
+        // Инициализация: показываем таблицу для CS:GO по умолчанию
+        window.onload = changeTable;
+    </script>
+</body>
+</html>
